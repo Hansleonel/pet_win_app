@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app_win/config/theme/ligth_theme.dart';
+import 'package:pet_app_win/data/dependency_injection/injection.dart';
 import 'package:pet_app_win/presentation/screens/onboarding/onboarding_page.dart';
 
 import 'config/router/routes.dart';
-import 'config/theme/app_theme.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
   runApp(const MyApp());
 }
 

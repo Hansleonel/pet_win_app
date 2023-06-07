@@ -5,6 +5,6 @@ import 'package:pet_app_win/presentation/screens/register/pet_registration_page.
 Map<String, WidgetBuilder> getApplicationRoutes() {
   return <String, WidgetBuilder>{
     OnboardingPage.route: (context) => const OnboardingPage(),
-    PetRegistrationPage.route: (context) => const PetRegistrationPage(),
+    PetRegistrationPage.route: (context) => PetRegistrationPage(),
   };
 }
