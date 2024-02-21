@@ -62,6 +62,12 @@ class OnboardingPageElement extends StatelessWidget {
   Widget build(BuildContext context) {
     final titleStyle = Theme.of(context).textTheme.titleLarge;
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'PetWin',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(defaultPadding),
         child: Column(

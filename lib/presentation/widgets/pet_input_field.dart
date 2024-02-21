@@ -3,6 +3,11 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../config/theme/constants/constants.dart';
 
+enum InputPetType {
+  inputPetWeight,
+  inputPetDefault,
+}
+
 class PetInputField extends StatelessWidget {
   final TextEditingController? textEditingController;
   final TextInputAction? textInputAction;
@@ -13,6 +18,8 @@ class PetInputField extends StatelessWidget {
   final int? maxLength;
   final bool obscureText;
   final String errorText;
+  final VoidCallback? onTap;
+  final InputPetType inputPetType;
 
   const PetInputField({
     Key? key,
@@ -25,11 +32,14 @@ class PetInputField extends StatelessWidget {
     this.maxLength,
     this.obscureText = false,
     this.errorText = 'must have at least 3 characters',
+    this.onTap,
+    this.inputPetType = InputPetType.inputPetDefault,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: onTap,
       controller: textEditingController,
       textInputAction: textInputAction,
       maxLength: maxLength,
@@ -38,11 +48,19 @@ class PetInputField extends StatelessWidget {
       obscureText: obscureText,
       onFieldSubmitted: (value) {},
       onChanged: (value) {
-        // TODO refactor this valdition to get a new keybordType
-        if (textEditingController != null &&
-            textEditingController!.text.startsWith('0') &&
-            keyboardType == TextInputType.number) {
-          textEditingController!.text = '';
+        if (inputPetType == InputPetType.inputPetDefault) {
+          // TODO refactor this valdition to get a new keybordType
+          if (textEditingController != null &&
+              textEditingController!.text.startsWith('0') &&
+              keyboardType == TextInputType.number) {
+            textEditingController!.text = '';
+          }
+        } else if (inputPetType == InputPetType.inputPetWeight) {
+          if (keyboardType == TextInputType.number) {
+            // TODO refactor here
+          } else {
+            textEditingController!.text = '';
+          }
         }
       },
       validator: (value) {
