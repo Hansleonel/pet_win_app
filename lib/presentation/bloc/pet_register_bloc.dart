@@ -4,7 +4,7 @@ import 'package:rxdart/rxdart.dart';
 import 'provider/bloc.dart';
 
 @injectable
-class RegisterBloc extends Bloc {
+class PetRegisterBloc extends Bloc {
   final _petSelectedSubject = BehaviorSubject<int>();
   final _petHasMicrochipSubject = BehaviorSubject<int>();
   final _petHasVaccineSubject = BehaviorSubject<int>();
@@ -29,5 +29,6 @@ class RegisterBloc extends Bloc {
     _petHasMicrochipSubject.close();
     _petHasVaccineSubject.close();
     _petIsNeuteredSubject.close();
+    _petHasMedicationSubject.close();
   }
 }

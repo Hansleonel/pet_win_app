@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pet_app_win/config/theme/constants/constants.dart';
-import 'package:pet_app_win/presentation/bloc/register_bloc.dart';
 import 'package:pet_app_win/presentation/widgets/pet_input_field.dart';
 import 'package:pet_app_win/presentation/widgets/shared/pet_divider.dart';
 
 import '../../../data/dependency_injection/injection.dart';
+import '../../bloc/pet_register_bloc.dart';
 import '../../bloc/provider/provider.dart';
 import '../../widgets/shared/app_bar_stepper.dart';
 import '../../widgets/shared/pet_avatar.dart';
@@ -21,8 +21,8 @@ class PetRegistrationPage extends StatefulWidget {
 }
 
 class _PetRegistrationPageState extends State<PetRegistrationPage> {
-  final RegisterBloc? registerBloc =
-      Provider.of<RegisterBloc>(() => getIt.get<RegisterBloc>());
+  final PetRegisterBloc? petRegisterBloc =
+      Provider.of<PetRegisterBloc>(() => getIt.get<PetRegisterBloc>());
   TextEditingController namePetCntrl = TextEditingController();
   TextEditingController dateBirthCntrl = TextEditingController();
   TextEditingController raceCntrl = TextEditingController();
@@ -66,7 +66,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                 ),
                 const SizedBox(height: 8.0),
                 StreamBuilder<int>(
-                  stream: registerBloc!.petSelected,
+                  stream: petRegisterBloc!.petSelected,
                   initialData: 0,
                   builder: (context, snapshot) {
                     return Row(
@@ -76,21 +76,21 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                           idPet: 1,
                           title: 'Perrito',
                           icon: 'dog',
-                          bloc: registerBloc!,
+                          bloc: petRegisterBloc!,
                           isSelectedItem: (snapshot.data == 1),
                         ),
                         ItemPetRegistration(
                           idPet: 2,
                           title: 'Gatito',
                           icon: 'cat',
-                          bloc: registerBloc!,
+                          bloc: petRegisterBloc!,
                           isSelectedItem: (snapshot.data == 2),
                         ),
                         ItemPetRegistration(
                           idPet: 3,
                           title: 'Otro',
                           icon: 'bird',
-                          bloc: registerBloc!,
+                          bloc: petRegisterBloc!,
                           isSelectedItem: (snapshot.data == 3),
                         )
                       ],
@@ -179,7 +179,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                 ),
                 const SizedBox(height: 8),
                 StreamBuilder<int>(
-                  stream: registerBloc!.petHasMicrochip,
+                  stream: petRegisterBloc!.petHasMicrochip,
                   initialData: 0,
                   builder: (context, snapshot) {
                     return Row(
@@ -192,7 +192,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                           iconData: Icons.check,
                           petButtonText: 'Yes',
                           onTap: () {
-                            registerBloc!.setPetHasMicrochip = 1;
+                            petRegisterBloc!.setPetHasMicrochip = 1;
                           },
                         ),
                         const SizedBox(width: 8),
@@ -201,7 +201,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                           iconData: Icons.close,
                           petButtonText: 'No',
                           onTap: () {
-                            registerBloc!.setPetHasMicrochip = 2;
+                            petRegisterBloc!.setPetHasMicrochip = 2;
                           },
                         ),
                       ],
@@ -210,7 +210,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                 ),
                 const SizedBox(height: 16),
                 StreamBuilder<int>(
-                  stream: registerBloc!.petHasVaccine,
+                  stream: petRegisterBloc!.petHasVaccine,
                   initialData: 0,
                   builder: (context, snapshot) {
                     return Row(
@@ -223,7 +223,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                           iconData: Icons.check,
                           petButtonText: 'Yes',
                           onTap: () {
-                            registerBloc!.setPetHasVaccine = 1;
+                            petRegisterBloc!.setPetHasVaccine = 1;
                           },
                         ),
                         const SizedBox(width: 8),
@@ -232,7 +232,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                           iconData: Icons.close,
                           petButtonText: 'No',
                           onTap: () {
-                            registerBloc!.setPetHasVaccine = 2;
+                            petRegisterBloc!.setPetHasVaccine = 2;
                           },
                         ),
                       ],
@@ -241,7 +241,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                 ),
                 const SizedBox(height: 16),
                 StreamBuilder<int>(
-                  stream: registerBloc!.petIsNeutered,
+                  stream: petRegisterBloc!.petIsNeutered,
                   initialData: 0,
                   builder: (context, snapshot) {
                     return Row(
@@ -254,7 +254,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                           iconData: Icons.check,
                           petButtonText: 'Yes',
                           onTap: () {
-                            registerBloc!.setPetIsNeutered = 1;
+                            petRegisterBloc!.setPetIsNeutered = 1;
                           },
                         ),
                         const SizedBox(width: 8),
@@ -263,7 +263,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                           iconData: Icons.close,
                           petButtonText: 'No',
                           onTap: () {
-                            registerBloc!.setPetIsNeutered = 2;
+                            petRegisterBloc!.setPetIsNeutered = 2;
                           },
                         ),
                       ],
@@ -272,7 +272,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                 ),
                 const SizedBox(height: 16),
                 StreamBuilder<int>(
-                  stream: registerBloc!.petHasMedication,
+                  stream: petRegisterBloc!.petHasMedication,
                   initialData: 0,
                   builder: (context, snapshot) {
                     return Column(
@@ -287,7 +287,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                               iconData: Icons.check,
                               petButtonText: 'Yes',
                               onTap: () {
-                                registerBloc!.setPetHasMedication = 1;
+                                petRegisterBloc!.setPetHasMedication = 1;
                               },
                             ),
                             const SizedBox(width: 8),
@@ -296,7 +296,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                               iconData: Icons.close,
                               petButtonText: 'No',
                               onTap: () {
-                                registerBloc!.setPetHasMedication = 2;
+                                petRegisterBloc!.setPetHasMedication = 2;
                               },
                             ),
                           ],
@@ -376,7 +376,7 @@ class ItemPetRegistration extends StatelessWidget {
   final int idPet;
   final String title;
   final String icon;
-  final RegisterBloc bloc;
+  final PetRegisterBloc bloc;
   final bool? isSelectedItem;
   const ItemPetRegistration({
     Key? key,
