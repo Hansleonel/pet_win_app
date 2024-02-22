@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pet_app_win/config/theme/constants/constants.dart';
-import 'package:pet_app_win/presentation/bloc/onboarding_bloc/onboarding_bloc.dart';
+import 'package:pet_app_win/presentation/bloc/register_bloc.dart';
 import 'package:pet_app_win/presentation/widgets/pet_input_field.dart';
 import 'package:pet_app_win/presentation/widgets/shared/pet_divider.dart';
 
@@ -21,8 +21,8 @@ class PetRegistrationPage extends StatefulWidget {
 }
 
 class _PetRegistrationPageState extends State<PetRegistrationPage> {
-  final OnboardingBloc? onboardingBloc =
-      Provider.of<OnboardingBloc>(() => getIt.get<OnboardingBloc>());
+  final RegisterBloc? registerBloc =
+      Provider.of<RegisterBloc>(() => getIt.get<RegisterBloc>());
   TextEditingController namePetCntrl = TextEditingController();
   TextEditingController dateBirthCntrl = TextEditingController();
   TextEditingController raceCntrl = TextEditingController();
@@ -66,7 +66,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                 ),
                 const SizedBox(height: 8.0),
                 StreamBuilder<int>(
-                  stream: onboardingBloc!.petSelected,
+                  stream: registerBloc!.petSelected,
                   initialData: 0,
                   builder: (context, snapshot) {
                     return Row(
@@ -76,21 +76,21 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                           idPet: 1,
                           title: 'Perrito',
                           icon: 'dog',
-                          bloc: onboardingBloc!,
+                          bloc: registerBloc!,
                           isSelectedItem: (snapshot.data == 1),
                         ),
                         ItemPetRegistration(
                           idPet: 2,
                           title: 'Gatito',
                           icon: 'cat',
-                          bloc: onboardingBloc!,
+                          bloc: registerBloc!,
                           isSelectedItem: (snapshot.data == 2),
                         ),
                         ItemPetRegistration(
                           idPet: 3,
                           title: 'Otro',
                           icon: 'bird',
-                          bloc: onboardingBloc!,
+                          bloc: registerBloc!,
                           isSelectedItem: (snapshot.data == 3),
                         )
                       ],
@@ -178,89 +178,152 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  children: const [
-                    Text('¿Microchip?', style: TextStyle(color: blackColor80)),
-                    Expanded(child: SizedBox()),
-                    PetButtonSelectable(
-                      isSelected: false,
-                      iconData: Icons.check,
-                      petButtonText: 'Yes',
-                    ),
-                    SizedBox(width: 8),
-                    PetButtonSelectable(
-                      isSelected: false,
-                      iconData: Icons.close,
-                      petButtonText: 'No',
-                    ),
-                  ],
+                StreamBuilder<int>(
+                  stream: registerBloc!.petHasMicrochip,
+                  initialData: 0,
+                  builder: (context, snapshot) {
+                    return Row(
+                      children: [
+                        const Text('¿Microchip?',
+                            style: TextStyle(color: blackColor80)),
+                        const Expanded(child: SizedBox()),
+                        PetButtonSelectable(
+                          isSelected: snapshot.data == 1,
+                          iconData: Icons.check,
+                          petButtonText: 'Yes',
+                          onTap: () {
+                            registerBloc!.setPetHasMicrochip = 1;
+                          },
+                        ),
+                        const SizedBox(width: 8),
+                        PetButtonSelectable(
+                          isSelected: snapshot.data == 2,
+                          iconData: Icons.close,
+                          petButtonText: 'No',
+                          onTap: () {
+                            registerBloc!.setPetHasMicrochip = 2;
+                          },
+                        ),
+                      ],
+                    );
+                  },
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  children: const [
-                    Text('¿Vacunado?', style: TextStyle(color: blackColor80)),
-                    Expanded(child: SizedBox()),
-                    PetButtonSelectable(
-                      isSelected: false,
-                      iconData: Icons.check,
-                      petButtonText: 'Yes',
-                    ),
-                    SizedBox(width: 8),
-                    PetButtonSelectable(
-                      isSelected: false,
-                      iconData: Icons.close,
-                      petButtonText: 'No',
-                    ),
-                  ],
+                StreamBuilder<int>(
+                  stream: registerBloc!.petHasVaccine,
+                  initialData: 0,
+                  builder: (context, snapshot) {
+                    return Row(
+                      children: [
+                        const Text('¿Vacunado?',
+                            style: TextStyle(color: blackColor80)),
+                        const Expanded(child: SizedBox()),
+                        PetButtonSelectable(
+                          isSelected: snapshot.data == 1,
+                          iconData: Icons.check,
+                          petButtonText: 'Yes',
+                          onTap: () {
+                            registerBloc!.setPetHasVaccine = 1;
+                          },
+                        ),
+                        const SizedBox(width: 8),
+                        PetButtonSelectable(
+                          isSelected: snapshot.data == 2,
+                          iconData: Icons.close,
+                          petButtonText: 'No',
+                          onTap: () {
+                            registerBloc!.setPetHasVaccine = 2;
+                          },
+                        ),
+                      ],
+                    );
+                  },
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  children: const [
-                    Text('¿Castrado?', style: TextStyle(color: blackColor80)),
-                    Expanded(child: SizedBox()),
-                    PetButtonSelectable(
-                      isSelected: false,
-                      iconData: Icons.check,
-                      petButtonText: 'Yes',
-                    ),
-                    SizedBox(width: 8),
-                    PetButtonSelectable(
-                      isSelected: false,
-                      iconData: Icons.close,
-                      petButtonText: 'No',
-                    ),
-                  ],
+                StreamBuilder<int>(
+                  stream: registerBloc!.petIsNeutered,
+                  initialData: 0,
+                  builder: (context, snapshot) {
+                    return Row(
+                      children: [
+                        const Text('¿Castrado?',
+                            style: TextStyle(color: blackColor80)),
+                        const Expanded(child: SizedBox()),
+                        PetButtonSelectable(
+                          isSelected: snapshot.data == 1,
+                          iconData: Icons.check,
+                          petButtonText: 'Yes',
+                          onTap: () {
+                            registerBloc!.setPetIsNeutered = 1;
+                          },
+                        ),
+                        const SizedBox(width: 8),
+                        PetButtonSelectable(
+                          isSelected: snapshot.data == 2,
+                          iconData: Icons.close,
+                          petButtonText: 'No',
+                          onTap: () {
+                            registerBloc!.setPetIsNeutered = 2;
+                          },
+                        ),
+                      ],
+                    );
+                  },
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  children: const [
-                    Text('¿Medicado?', style: TextStyle(color: blackColor80)),
-                    Expanded(child: SizedBox()),
-                    PetButtonSelectable(
-                      isSelected: false,
-                      iconData: Icons.check,
-                      petButtonText: 'Yes',
-                    ),
-                    SizedBox(width: 8),
-                    PetButtonSelectable(
-                      isSelected: false,
-                      iconData: Icons.close,
-                      petButtonText: 'No',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                    'Ahora ingresa que medicamentos esta tomando tu fiel amigo:',
-                    style: TextStyle(color: blackColor80)),
-                const SizedBox(height: 8),
-                PetInputField(
-                  textEditingController: medicCntrl,
-                  keyboardType: TextInputType.text,
-                  hintText:
-                      'Meloxicam para la artritis, amoxicilina como antibiotico',
-                  prefixIcon: 'assets/icons/dog.svg',
-                  errorText: 'intenta ser exacto',
+                StreamBuilder<int>(
+                  stream: registerBloc!.petHasMedication,
+                  initialData: 0,
+                  builder: (context, snapshot) {
+                    return Column(
+                      children: [
+                        Row(
+                          children: [
+                            const Text('¿Medicado?',
+                                style: TextStyle(color: blackColor80)),
+                            const Expanded(child: SizedBox()),
+                            PetButtonSelectable(
+                              isSelected: snapshot.data == 1,
+                              iconData: Icons.check,
+                              petButtonText: 'Yes',
+                              onTap: () {
+                                registerBloc!.setPetHasMedication = 1;
+                              },
+                            ),
+                            const SizedBox(width: 8),
+                            PetButtonSelectable(
+                              isSelected: snapshot.data == 2,
+                              iconData: Icons.close,
+                              petButtonText: 'No',
+                              onTap: () {
+                                registerBloc!.setPetHasMedication = 2;
+                              },
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        snapshot.data == 1
+                            ? Column(
+                                children: [
+                                  const Text(
+                                      'Ahora ingresa que medicamentos esta tomando tu fiel amigo y sus posibles dolencias:',
+                                      style: TextStyle(color: blackColor80)),
+                                  const SizedBox(height: 8),
+                                  PetInputField(
+                                    enabled: true,
+                                    textEditingController: medicCntrl,
+                                    keyboardType: TextInputType.text,
+                                    hintText:
+                                        'Meloxicam para la artritis, amoxicilina como antibiotico',
+                                    prefixIcon: 'assets/icons/dog.svg',
+                                    errorText: 'intenta ser exacto',
+                                  ),
+                                ],
+                              )
+                            : const SizedBox(),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
@@ -313,7 +376,7 @@ class ItemPetRegistration extends StatelessWidget {
   final int idPet;
   final String title;
   final String icon;
-  final OnboardingBloc bloc;
+  final RegisterBloc bloc;
   final bool? isSelectedItem;
   const ItemPetRegistration({
     Key? key,

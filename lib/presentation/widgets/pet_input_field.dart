@@ -19,6 +19,7 @@ class PetInputField extends StatelessWidget {
   final bool obscureText;
   final String errorText;
   final VoidCallback? onTap;
+  final bool enabled;
   final InputPetType inputPetType;
 
   const PetInputField({
@@ -32,6 +33,7 @@ class PetInputField extends StatelessWidget {
     this.maxLength,
     this.obscureText = false,
     this.errorText = 'must have at least 3 characters',
+    this.enabled = true,
     this.onTap,
     this.inputPetType = InputPetType.inputPetDefault,
   }) : super(key: key);
@@ -46,6 +48,7 @@ class PetInputField extends StatelessWidget {
       autofocus: false,
       keyboardType: keyboardType,
       obscureText: obscureText,
+      enabled: enabled,
       onFieldSubmitted: (value) {},
       onChanged: (value) {
         if (inputPetType == InputPetType.inputPetDefault) {
