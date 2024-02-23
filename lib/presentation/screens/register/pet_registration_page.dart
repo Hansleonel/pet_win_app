@@ -23,6 +23,8 @@ class PetRegistrationPage extends StatefulWidget {
 class _PetRegistrationPageState extends State<PetRegistrationPage> {
   final PetRegisterBloc? petRegisterBloc =
       Provider.of<PetRegisterBloc>(() => getIt.get<PetRegisterBloc>());
+  final ScrollController scrollController = ScrollController();
+  final FocusNode medicFocusNode = FocusNode();
   TextEditingController namePetCntrl = TextEditingController();
   TextEditingController dateBirthCntrl = TextEditingController();
   TextEditingController raceCntrl = TextEditingController();
@@ -30,6 +32,14 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
   TextEditingController behaviorCntrl = TextEditingController();
   TextEditingController careCntrl = TextEditingController();
   TextEditingController medicCntrl = TextEditingController();
+
+  void moveScrollToBottom() {
+    scrollController.animateTo(
+      scrollController.position.pixels + 120,
+      duration: const Duration(milliseconds: 150),
+      curve: Curves.fastOutSlowIn,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +53,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
           ),
         ),
         body: SingleChildScrollView(
+          controller: scrollController,
           child: Padding(
             padding: const EdgeInsets.all(defaultPadding),
             child: Column(
@@ -288,6 +299,12 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                               petButtonText: 'Yes',
                               onTap: () {
                                 petRegisterBloc!.setPetHasMedication = 1;
+                                moveScrollToBottom();
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  FocusScope.of(context)
+                                      .requestFocus(medicFocusNode);
+                                });
                               },
                             ),
                             const SizedBox(width: 8),
@@ -311,6 +328,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                                   const SizedBox(height: 8),
                                   PetInputField(
                                     enabled: true,
+                                    focusNode: medicFocusNode,
                                     textEditingController: medicCntrl,
                                     keyboardType: TextInputType.text,
                                     hintText:
@@ -368,6 +386,8 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
     raceCntrl.dispose();
     behaviorCntrl.dispose();
     medicCntrl.dispose();
+    scrollController.dispose();
+    medicFocusNode.dispose();
     super.dispose();
   }
 }
