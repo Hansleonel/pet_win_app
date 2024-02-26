@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_app_win/config/theme/constants/constants.dart';
 import 'package:pet_app_win/presentation/screens/register/pet_registration_page.dart';
 
+// TODO refactor OnboardingPage entire page
 class OnboardingPage extends StatelessWidget {
   static const route = 'onboardingPage';
   const OnboardingPage({Key? key}) : super(key: key);

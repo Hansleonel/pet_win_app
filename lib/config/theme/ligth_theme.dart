@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_app_win/config/theme/dropdown_menu_theme.dart';
 
 import 'button_theme.dart';
 import 'checkbox_theme.dart';
@@ -24,5 +25,7 @@ ThemeData lightTheme(BuildContext context) {
     appBarTheme: appBarLightTheme,
     scrollbarTheme: scrollbarThemeData,
     dataTableTheme: dataTableLightThemeData,
+    // TODO posible refactor here because the theme
+    dropdownMenuTheme: dropdownMenuThemeData,
   );
 }

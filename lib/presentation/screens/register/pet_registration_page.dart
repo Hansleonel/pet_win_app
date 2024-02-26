@@ -25,12 +25,14 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
       Provider.of<PetRegisterBloc>(() => getIt.get<PetRegisterBloc>());
   final ScrollController scrollController = ScrollController();
   final FocusNode medicFocusNode = FocusNode();
+  final List<String> list = <String>['Masculino', 'Femenino', 'No definido'];
   TextEditingController namePetCntrl = TextEditingController();
   TextEditingController dateBirthCntrl = TextEditingController();
   TextEditingController raceCntrl = TextEditingController();
   TextEditingController weightCntrl = TextEditingController();
   TextEditingController behaviorCntrl = TextEditingController();
   TextEditingController careCntrl = TextEditingController();
+  TextEditingController sexCntrl = TextEditingController();
   TextEditingController medicCntrl = TextEditingController();
 
   void moveScrollToBottom() {
@@ -39,6 +41,12 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
       duration: const Duration(milliseconds: 150),
       curve: Curves.fastOutSlowIn,
     );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
@@ -183,6 +191,37 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                   errorText: 'intenta ser exacto',
                 ),
                 const SizedBox(height: 8),
+                const Text(
+                  'Su sexo',
+                  style: TextStyle(color: blackColor80),
+                ),
+                const SizedBox(height: 4),
+                FocusScope(
+                  canRequestFocus: false,
+                  child: DropdownMenu(
+                    leadingIcon: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: defaultPadding * 0.75),
+                      child: SvgPicture.asset('assets/icons/FaceId.svg',
+                          height: 24,
+                          width: 24,
+                          color: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .color!
+                              .withOpacity(0.3)),
+                    ),
+                    controller: sexCntrl,
+                    width: MediaQuery.of(context).size.width - 32,
+                    enableSearch: false,
+                    hintText: 'Sexo',
+                    dropdownMenuEntries:
+                        list.map<DropdownMenuEntry<String>>((String value) {
+                      return DropdownMenuEntry<String>(
+                          value: value, label: value);
+                    }).toList(),
+                  ),
+                ),
                 const PetDivider(height: 24),
                 Text(
                   'Información de Cuidado',
@@ -294,19 +333,20 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                                 style: TextStyle(color: blackColor80)),
                             const Expanded(child: SizedBox()),
                             PetButtonSelectable(
-                              isSelected: snapshot.data == 1,
-                              iconData: Icons.check,
-                              petButtonText: 'Yes',
-                              onTap: () {
-                                petRegisterBloc!.setPetHasMedication = 1;
-                                moveScrollToBottom();
-                                Future.delayed(
-                                    const Duration(milliseconds: 200), () {
-                                  FocusScope.of(context)
-                                      .requestFocus(medicFocusNode);
-                                });
-                              },
-                            ),
+                                isSelected: snapshot.data == 1,
+                                iconData: Icons.check,
+                                petButtonText: 'Yes',
+                                onTap: () {
+                                  petRegisterBloc!.setPetHasMedication = 1;
+                                  moveScrollToBottom();
+                                  Future.delayed(
+                                    const Duration(milliseconds: 200),
+                                    () {
+                                      FocusScope.of(context)
+                                          .requestFocus(medicFocusNode);
+                                    },
+                                  );
+                                }),
                             const SizedBox(width: 8),
                             PetButtonSelectable(
                               isSelected: snapshot.data == 2,
@@ -367,6 +407,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
       // usar bloc, un valueStream<bool> y un set para sobreescribir que la data esta completa
       print('complete');
     } else {
+      print('no complete');
       // usar bloc, un valueStream<bool> y un set para sobreescribir que la data necesita ser completada
       // ademas podemos mostrar un widget mencionando el error de que la data necesita ser completada para continuar con los siguientes pasos
     }
@@ -376,7 +417,21 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
     return namePetCntrl.text.isNotEmpty &&
         dateBirthCntrl.text.isNotEmpty &&
         raceCntrl.text.isNotEmpty &&
-        behaviorCntrl.text.isNotEmpty;
+        weightCntrl.text.isNotEmpty &&
+        behaviorCntrl.text.isNotEmpty &&
+        sexCntrl.text.isNotEmpty &&
+        petRegisterBloc!.petSelected.hasValue &&
+        petRegisterBloc!.petHasMicrochip.hasValue &&
+        petRegisterBloc!.petHasVaccine.hasValue &&
+        petRegisterBloc!.petIsNeutered.hasValue &&
+        hasOptionSelectedMedication() &&
+        (petRegisterBloc!.petHasMedication.value == 1
+            ? medicCntrl.text.isNotEmpty
+            : true);
+  }
+
+  bool hasOptionSelectedMedication() {
+    return petRegisterBloc!.petHasMedication.hasValue;
   }
 
   @override
@@ -385,6 +440,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
     dateBirthCntrl.dispose();
     raceCntrl.dispose();
     behaviorCntrl.dispose();
+    //sexCntrl.dispose();
     medicCntrl.dispose();
     scrollController.dispose();
     medicFocusNode.dispose();
