@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pet_app_win/config/theme/constants/constants.dart';
 import 'package:pet_app_win/presentation/widgets/pet_input_field.dart';
 import 'package:pet_app_win/presentation/widgets/shared/pet_divider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../data/dependency_injection/injection.dart';
 import '../../bloc/pet_register_bloc.dart';
@@ -52,6 +53,7 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
   @override
   Widget build(BuildContext context) {
     final titleStyle = Theme.of(context).textTheme.titleLarge;
+    final lang = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -69,13 +71,13 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
               children: [
                 Center(
                   child: Text(
-                    'Cuentanos acerca de tus Mascota',
+                    lang.pet_registration_tell_us_about_your_pet,
                     style: titleStyle,
                   ),
                 ),
                 const SizedBox(height: 8.0),
-                const Text(
-                  'Ayúdanos a conocer mejor a tu mascota. Nuestra inteligencia artificial utilizará esta información para personalizar las recomendaciones de cuidado y nutrición para tu mascota.',
+                Text(
+                  lang.pet_registration_help_us_get_to_know_your_pet,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16.0),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pet_app_win/config/theme/ligth_theme.dart';
 import 'package:pet_app_win/data/dependency_injection/injection.dart';
 import 'package:pet_app_win/presentation/screens/onboarding/onboarding_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'config/router/routes.dart';
 
@@ -19,6 +21,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Planet App',
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'), // English
+        Locale('es'), // Spanish
+      ],
       debugShowCheckedModeBanner: false,
       theme: lightTheme(context),
       themeMode: ThemeMode.light,
