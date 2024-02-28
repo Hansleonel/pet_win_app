@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app_win/config/theme/constants/constants.dart';
 import 'package:pet_app_win/presentation/screens/register/pet_registration_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // TODO refactor OnboardingPage entire page
 class OnboardingPage extends StatelessWidget {
@@ -9,6 +10,7 @@ class OnboardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lang = AppLocalizations.of(context)!;
     return PageView.builder(
       allowImplicitScrolling: true,
       physics: const ClampingScrollPhysics(),
@@ -17,9 +19,8 @@ class OnboardingPage extends StatelessWidget {
         if (index == 0) {
           return Scaffold(
             body: OnboardingPageElement(
-              title: 'Conoce a tu mascota como nunca antes',
-              subTitle:
-                  'Registra los datos de tu mascota y recibe análisis y recomendaciones personalizadas de IA para su salud.',
+              title: lang.on_boarding_know_your_pet,
+              subTitle: lang.on_boarding_register_your_pet_data,
               index: index,
             ),
           );
