@@ -27,9 +27,8 @@ class OnboardingPage extends StatelessWidget {
         } else if (index == 1) {
           return Scaffold(
             body: OnboardingPageElement(
-              title: 'Nunca olvides una comida',
-              subTitle:
-                  'Recibe recordatorios de alimentación y compra alimentos para mascotas directamente desde la aplicación.',
+              title: lang.on_boarding_never_miss_meal,
+              subTitle: lang.on_boarding_get_feeding_reminders,
               index: index,
             ),
           );
