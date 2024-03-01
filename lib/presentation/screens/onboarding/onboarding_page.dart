@@ -35,9 +35,8 @@ class OnboardingPage extends StatelessWidget {
         } else if (index == 2) {
           return Scaffold(
             body: OnboardingPageElement(
-              title: 'Conecta con los mejores cuidadores y veterinarios',
-              subTitle:
-                  'Encuentra y contacta a los mejores cuidadores y veterinarios locales con calificaciones y reseñas.',
+              title: lang.on_boarding_connect_care_givers,
+              subTitle: lang.on_boarding_find_care_givers,
               index: index,
             ),
           );

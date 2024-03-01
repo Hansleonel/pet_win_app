@@ -95,21 +95,21 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                       children: [
                         ItemPetRegistration(
                           idPet: 1,
-                          title: 'Perrito',
+                          title: lang.pet_registration_puppy,
                           icon: 'dog',
                           bloc: petRegisterBloc!,
                           isSelectedItem: (snapshot.data == 1),
                         ),
                         ItemPetRegistration(
                           idPet: 2,
-                          title: 'Gatito',
+                          title: lang.pet_registration_kitten,
                           icon: 'cat',
                           bloc: petRegisterBloc!,
                           isSelectedItem: (snapshot.data == 2),
                         ),
                         ItemPetRegistration(
                           idPet: 3,
-                          title: 'Otro',
+                          title: lang.pet_registration_other,
                           icon: 'bird',
                           bloc: petRegisterBloc!,
                           isSelectedItem: (snapshot.data == 3),
@@ -122,15 +122,15 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                 const PetDivider(),
                 const SizedBox(height: 16),
                 Text(
-                  'Acerca de tu mascota',
+                  lang.pet_registration_about_your_pet,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 8),
                 const PetAvatar(),
                 const SizedBox(height: 16),
-                const Text(
-                  'Nombre de tu amiguito',
-                  style: TextStyle(color: blackColor80),
+                Text(
+                  lang.pet_registration_buddy_name,
+                  style: const TextStyle(color: blackColor80),
                 ),
                 const SizedBox(height: 4),
                 PetInputField(
