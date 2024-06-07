@@ -76,10 +76,11 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
                   ),
                 ),
                 const SizedBox(height: 8.0),
-                Text(
-                  lang.pet_registration_help_us_get_to_know_your_pet,
-                  textAlign: TextAlign.center,
-                ),
+                Text(lang.pet_registration_help_us_get_to_know_your_pet,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: blackColor60,
+                    )),
                 const SizedBox(height: 16.0),
                 Text(
                   '¿Qué tipo de mascota tienes?',
@@ -397,7 +398,10 @@ class _PetRegistrationPageState extends State<PetRegistrationPage> {
               //Navigator.pushNamed(context, Successfullpage.route);
               register();
             },
-            child: const Text('CONTINUAR'),
+            child: const Text(
+              'CONTINUAR',
+              style: TextStyle(color: whiteColor),
+            ),
           ),
         ),
       ),
